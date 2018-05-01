@@ -1,3 +1,88 @@
 @import 'skeleton-css/css/normalize';
 @import 'skeleton-css/css/skeleton';
 
+@mixin well {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #EEE;
+  border-radius: .5rem;
+}
+
+.App {
+  margin: 4rem 0;
+}
+
+input[type='radio'] {
+  margin-right: 1rem;
+}
+
+#form-controls {
+  text-align: center;
+}
+
+.form-item {
+  @include well;
+}
+
+.form-item-controls {
+  text-align: center;
+}
+
+.form-item-remove, .form-item-update {
+  color: #fff;
+  font-size: 1.9rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  line-height: 0;
+  padding: 0;
+  display: inline-block;
+  margin-right: 1rem;
+  border-color: #fff;
+
+  &:hover, &:focus {
+    color: #fff;
+    border-color: #fff;
+  }
+}
+
+.form-item-remove {
+  background-color: red;
+  padding-left: .1rem;
+}
+
+.form-item-update {
+  background-color: #33C3F0;
+}
+
+.item-edit-overlay {
+  position: fixed;
+  background-color: rgba(0, 0, 0, .5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: scroll;
+
+  > .item-edit-form {
+    background-color: #fff;
+    margin: 10% 10%;
+    padding: 4rem;
+  }
+
+  .sub-item-edit-form {
+    @include well;
+
+    input {
+      margin-bottom: 0;
+    }
+
+    .form-item-remove {
+      margin: 2rem auto;
+    }
+  }
+}
+
+.align-center {
+  text-align: center;
+}
