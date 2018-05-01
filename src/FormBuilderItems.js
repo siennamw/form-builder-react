@@ -9,7 +9,6 @@ class FormBuilderItems extends Component {
   state = {
     editing: false,
     idOfItemBeingEdited: null,
-    itemBeingEdited: null,
   };
 
   handleEdit = (e) => {
@@ -18,7 +17,6 @@ class FormBuilderItems extends Component {
     this.setState({
       editing: true,
       idOfItemBeingEdited: id,
-      itemBeingEdited: this.props.formItems[id],
     });
   };
 
@@ -41,10 +39,12 @@ class FormBuilderItems extends Component {
       switch (item.kind) {
         case constants.TEXT_FIELD: {
           element = (
-            <label htmlFor={id}>
-              {item.label}
-              <input type="text" name={id} />
-            </label>
+            <div>
+              <label htmlFor={id}>
+                {item.label}
+              </label>
+              <input className="u-full-width" type="text" name={id} />
+            </div>
           );
           break;
         }
@@ -53,19 +53,21 @@ class FormBuilderItems extends Component {
             subItems = item.subItems.map((subId) => {
               subItem = this.props.formSubItems[subId];
               return (
-                <option key={subItem.id} value={subItem.value}>
+                <option key={subId} value={subItem.value}>
                   {subItem.label}
                 </option>
               );
             });
           }
           element = (
-            <label htmlFor={id}>
-              {item.label}
-              <select name={id}>
+            <div>
+              <label htmlFor={id}>
+                {item.label}
+              </label>
+              <select className="u-full-width" name={id}>
                 {subItems}
               </select>
-            </label>
+            </div>
           );
           break;
         }
@@ -74,7 +76,7 @@ class FormBuilderItems extends Component {
             subItems = item.subItems.map((subId) => {
               subItem = this.props.formSubItems[subId];
               return (
-                <label key={subItem.id}>
+                <label key={subId} className="u-full-width">
                   <input type="radio" name={id} value={subItem.value} />
                   {subItem.label}
                 </label>
@@ -82,19 +84,28 @@ class FormBuilderItems extends Component {
             });
           }
           element = (
-            <label htmlFor={id}>
-              {item.label}
+            <div>
+              <label htmlFor={id}>
+                {item.label}
+              </label>
               {subItems}
-            </label>
+            </div>
           );
           break;
         }
         case constants.SUBMIT_BUTTON: {
           element = (
-            <button onClick={(e) => {e.preventDefault();}}>
+            <button
+              className="u-full-width"
+              onClick={(e) => {
+                e.preventDefault();
+              }}>
               {item.label}
             </button>
           );
+          break;
+        }
+        default: {
           break;
         }
       }
@@ -115,10 +126,16 @@ class FormBuilderItems extends Component {
 
     return (
       <div>
+        <div>
+          {result.length > 0 ? result :
+            <h4 className="align-center">Use the buttons to build your
+              form</h4>}
+        </div>
         {this.state.editing ?
           <ItemEditForm
             id={this.state.idOfItemBeingEdited}
-            item={this.state.itemBeingEdited}
+            formItems={this.props.formItems}
+            formSubItems={this.props.formSubItems}
             updateFormItem={this.props.updateFormItem}
             addSubItem={this.props.addSubItem}
             updateSubItem={this.props.updateSubItem}
@@ -126,10 +143,6 @@ class FormBuilderItems extends Component {
             closeForm={this.closeForm}
           />
           : undefined}
-        <h2>Form Items</h2>
-        <form>
-          {result}
-        </form>
       </div>
     );
   }
@@ -137,6 +150,7 @@ class FormBuilderItems extends Component {
 
 FormBuilderItems.propTypes = {
   formItems: propTypes.object,
+  formSubItems: propTypes.object,
   formItemOrder: propTypes.arrayOf(propTypes.string),
   updateFormItem: propTypes.func,
   removeFormItem: propTypes.func,
@@ -147,6 +161,7 @@ FormBuilderItems.propTypes = {
 
 FormBuilderItems.defaultProps = {
   formItems: {},
+  formSubItems: {},
   formItemOrder: [],
   updateFormItem: () => {},
   removeFormItem: () => {},
