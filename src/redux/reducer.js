@@ -76,8 +76,12 @@ export default function reducer(state = defaultState, action) {
         parentId: action.parentId,
       };
 
-      if (newState.formItems[action.parentId]) {
-        newState.formItems[action.parentId].subItems.push(id);
+      if (newState.formItems[action.parentId] &&
+        !newState.formItems[action.parentId].subItems.includes(id)) {
+        newState.formItems[action.parentId].subItems = [
+          ...newState.formItems[action.parentId].subItems,
+          id,
+        ];
       }
 
       return newState;
