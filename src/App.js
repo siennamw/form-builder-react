@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import FormBuilder from './FormBuilder';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="App">
+    <FormBuilder />
+  </div>
+);
 
 export default App;
