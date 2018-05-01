@@ -33,10 +33,10 @@ export const updateSubItem = (id, label, value) => ({
   id,
   label,
   value,
+  type: actionTypes.UPDATE_SUB_ITEM,
 });
 
-export const removeSubItem = (id, label, value) => ({
+export const removeSubItem = id => ({
   id,
-  label,
-  value,
+  type: actionTypes.REMOVE_SUB_ITEM,
 });
