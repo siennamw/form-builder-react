@@ -12,6 +12,7 @@ import * as actionTypes from './actionTypes';
 const defaultState = {
   formItems: {},
   formItemOrder: [],
+  formSubItems: {},
 };
 
 export default function reducer(state = defaultState, action) {
@@ -49,11 +50,17 @@ export default function reducer(state = defaultState, action) {
       const newState = { ...state };
 
       newState.formItems = { ...newState.formItems };
+      const subItems = newState.formItems[action.id].subItems;
       delete newState.formItems[action.id];
 
       newState.formItemOrder = newState.formItemOrder.filter(id => (
         id !== action.id
       ));
+
+      newState.formSubItems = { ...newState.formSubItems };
+      subItems.forEach((id) => {
+        delete newState.formSubItems[id];
+      });
 
       return newState;
     }
@@ -61,29 +68,31 @@ export default function reducer(state = defaultState, action) {
       const newState = { ...state };
       const id = action.id || uuid();
 
-      newState.formItems = { ...newState.formItems };
-      newState.formItems[id] = {
+      newState.formSubItems = { ...newState.formSubItems };
+      newState.formSubItems[id] = {
         kind: action.kind,
         label: action.label || '',
         value: action.value || '',
         parentId: action.parentId,
       };
 
-      newState.formItems.subItems.push(id);
+      if (newState.formItems[action.parentId]) {
+        newState.formItems[action.parentId].subItems.push(id);
+      }
 
       return newState;
     }
     case actionTypes.UPDATE_SUB_ITEM: {
       const newState = { ...state };
 
-      newState.formItems = { ...newState.formItems };
+      newState.formSubItems = { ...newState.formSubItems };
 
       if (action.label !== undefined) {
-        newState.formItems[action.id].label = action.label;
+        newState.formSubItems[action.id].label = action.label;
       }
 
       if (action.value !== undefined) {
-        newState.formItems[action.id].value = action.value;
+        newState.formSubItems[action.id].value = action.value;
       }
 
       return newState;
@@ -91,11 +100,11 @@ export default function reducer(state = defaultState, action) {
     case actionTypes.REMOVE_SUB_ITEM: {
       const newState = { ...state };
 
-      newState.formItems = { ...newState.formItems };
+      newState.formSubItems = { ...newState.formSubItems };
 
-      const parent = newState.formItems[action.id].parentId;
+      const parent = newState.formSubItems[action.id].parentId;
 
-      delete newState.formItems[action.id];
+      delete newState.formSubItems[action.id];
 
       // remove subItem from parent list
       newState.formItems[parent] = { ...newState.formItems[parent] };
