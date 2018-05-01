@@ -29,18 +29,17 @@ class FormControls extends Component {
 
   render() {
     return (
-      <div>
-        <h4>Form Controls</h4>
-        <button onClick={this.handleTextField}>
+      <div id="form-controls">
+        <button className="u-full-width" onClick={this.handleTextField}>
           Add Text Field
         </button>
-        <button onClick={this.handleRadioList}>
+        <button className="u-full-width" onClick={this.handleRadioList}>
           Add Radio List
         </button>
-        <button onClick={this.handleDropdownList}>
+        <button className="u-full-width" onClick={this.handleDropdownList}>
           Add Dropdown List
         </button>
-        <button onClick={this.handleSubmitButton}>
+        <button className="u-full-width" onClick={this.handleSubmitButton}>
           Add Submit Button
         </button>
       </div>
