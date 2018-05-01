@@ -1,2 +1,6 @@
 export const ADD_FORM_ITEM = 'ADD_FORM_ITEM';
+export const UPDATE_FORM_ITEM = 'UPDATE_FORM_ITEM';
 export const REMOVE_FORM_ITEM = 'REMOVE_FORM_ITEM';
+export const ADD_SUB_ITEM = 'ADD_SUB_ITEM';
+export const UPDATE_SUB_ITEM = 'UPDATE_SUB_ITEM';
+export const REMOVE_SUB_ITEM = 'REMOVE_SUB_ITEM';
